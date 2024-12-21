@@ -1,0 +1,61 @@
+{
+  "name": "add_anki_card",
+  "description": "Add a card to the 'Spanish A2' Anki deck via the Flask server.",
+  "servers": [
+    {
+      "url": "https://9ab6-93-176-147-127.ngrok-free.app"
+    }
+  ],
+  "paths": {
+    "/anki_flask/add_card": {
+      "post": {
+        "operationId": "addAnkiCard",
+        "summary": "Add a card to the 'Spanish A2' Anki deck",
+        "description": "Sends a card to the Flask server for adding to the 'Spanish A2' deck.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Card"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Card successfully added to the deck."
+          },
+          "400": {
+            "description": "Invalid request data."
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Add Anki Card",
+    "version": "1.0.0"
+  },
+  "components": {
+    "schemas": {
+      "Card": {
+        "type": "object",
+        "properties": {
+          "front": {
+            "type": "string",
+            "description": "The front text of the card."
+          },
+          "back": {
+            "type": "string",
+            "description": "The back text of the card."
+          }
+        },
+        "required": [
+          "front",
+          "back"
+        ]
+      }
+    }
+  }
+}
