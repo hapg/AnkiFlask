@@ -27,4 +27,4 @@ COPY --from=builder --chown=app:app /app /app
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Run the Flask application by default
-CMD ["python", "-m", "anki_flask/server.py"]
+CMD ["python", "/app/anki_flask/server.py"]
