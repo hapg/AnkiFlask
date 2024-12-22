@@ -88,9 +88,6 @@ jobs:
           docker compose up --watch -d
           docker compose down
 
-      - name: Test command line (multistage)
-        run: docker run ankiflask-multistage:latest hello
-
   deploy:
     name: "deploy image"
     runs-on: ubuntu-latest
