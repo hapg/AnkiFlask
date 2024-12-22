@@ -78,7 +78,7 @@ jobs:
           docker run -d --name ankiflask-container -p 443:443 ankiflask:latest
           sleep 10  # Wait for the server to start
           docker logs ankiflask-container
-          curl -f http://localhost:443/anki_flask/test || docker logs ankiflask-container
+          curl -f https://localhost:443/anki_flask/test || docker logs ankiflask-container
           docker stop ankiflask-container
           docker rm ankiflask-container
 
