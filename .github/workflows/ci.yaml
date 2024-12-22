@@ -28,14 +28,14 @@ jobs:
           cache-to: type=gha,mode=min,scope=ankiflask
           outputs: type=docker,dest=/tmp/ankiflask.tar
 
-      - name: Build and export (multistage)
-        uses: docker/build-push-action@v6
-        with:
-          file: multistage.Dockerfile
-          tags: ankiflask-multistage:latest
-          cache-from: type=gha,scope=ankiflask-multistage
-          cache-to: type=gha,mode=min,scope=ankiflask-multistage
-          outputs: type=docker,dest=/tmp/ankiflask-multistage.tar
+#      - name: Build and export (multistage)
+#        uses: docker/build-push-action@v6
+#        with:
+#          file: multistage.Dockerfile
+#          tags: ankiflask-multistage:latest
+#          cache-from: type=gha,scope=ankiflask-multistage
+#          cache-to: type=gha,mode=min,scope=ankiflask-multistage
+#          outputs: type=docker,dest=/tmp/ankiflask-multistage.tar
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -43,11 +43,11 @@ jobs:
           name: ankiflask
           path: /tmp/ankiflask.tar
 
-      - name: Upload artifact (multistage)
-        uses: actions/upload-artifact@v4
-        with:
-          name: ankiflask-multistage
-          path: /tmp/ankiflask-multistage.tar
+#      - name: Upload artifact (multistage)
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: ankiflask-multistage
+#          path: /tmp/ankiflask-multistage.tar
 
   test:
     name: "test image"
@@ -76,7 +76,7 @@ jobs:
 
       - name: Test Flask server
         run: |
-          docker run -d --name ankiflask-container -p 443:443 ankiflask-multistage:latest
+          docker run -d --name ankiflask-container -p 443:443 ankiflask:latest
           sleep 10  # Wait for the server to start
           docker logs ankiflask-container
           curl -f http://localhost:443/anki_flask/test || docker logs ankiflask-container
@@ -95,14 +95,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download artifact (multistage)
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: ankiflask-multistage
+          name: ankiflask
           path: /tmp
 
       - name: Load Docker image
-        run: docker load --input /tmp/ankiflask-multistage.tar
+        run: docker load --input /tmp/ankiflask.tar
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -112,12 +112,5 @@ jobs:
 
       - name: Tag and push Docker image
         run: |
-          docker tag ankiflask-multistage:latest hapgilmore/ankiflask:latest
+          docker tag ankiflask:latest hapgilmore/ankiflask:latest
           docker push hapgilmore/ankiflask:latest
-
-      - name: Deploy to Docker Desktop
-        run: |
-          docker pull hapgilmore/ankiflask:latest
-          docker stop ankiflask-container || true
-          docker rm ankiflask-container || true
-          docker run -d --name ankiflask-container -p 443:443 hapgilmore/ankiflask:latest
