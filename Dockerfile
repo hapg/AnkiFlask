@@ -22,6 +22,9 @@ ADD . /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 
+# Copy SSL certificates into the container
+COPY anki_flask/certs /app/anki_flask/certs
+
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
 
