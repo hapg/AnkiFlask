@@ -8,3 +8,15 @@ dependencies = [
     "flask>=3.1.0",
     "requests>=2.32.3",
 ]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+start-server = "anki_flask.server:main"
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.6.2",
+    "fastapi-cli>=0.0.5",
+]
