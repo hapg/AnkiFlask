@@ -7,6 +7,8 @@ import subprocess
 from docker import errors
 from pathlib import Path
 
+PORT = 443
+
 def build_docker_image(client, dockerfile='Dockerfile'):
     try:
         client.images.build(path="run", tag="ankiflask-multistage:latest")
@@ -38,11 +40,11 @@ def run_docker_container(client):
         container = client.containers.run(
             "ankiflask-multistage:latest",
             name="ankiflask-container",
-            ports={'500/tcp': 500},
+            ports={f'{PORT}/tcp': PORT},
             detach=True
         )
         time.sleep(5)
-        response = requests.get("http://localhost:500/anki_flask/test")
+        response = requests.get(f"http://localhost:{PORT}/anki_flask/test")
         if response.status_code == 200:
             print("Server is running")
         else:

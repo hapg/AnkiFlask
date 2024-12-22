@@ -52,7 +52,7 @@ def test():
     return 'Server is running', 200
 
 def run():
-    app.run(port=500)
+    app.run(port=443)
 
 if __name__ == '__main__':
     run()
