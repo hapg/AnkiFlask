@@ -52,7 +52,7 @@ def test():
     return 'Server is running', 200
 
 def run():
-    app.run(host="0.0.0.0", port=443)
+    app.run(host="0.0.0.0", port=443, ssl_context=('certs/cert.pem', 'certs/key.pem'))
 
 if __name__ == '__main__':
     run()
