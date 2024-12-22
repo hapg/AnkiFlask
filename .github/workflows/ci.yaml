@@ -71,7 +71,6 @@ jobs:
       - name: Load images
         run: |
           docker load --input /tmp/ankiflask.tar
-#          docker load --input /tmp/ankiflask-multistage.tar
           docker image ls -a
 
       - name: Test Flask server
