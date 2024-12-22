@@ -13,10 +13,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project.scripts]
-start-server = "anki_flask.server:main"
+start-server = "anki_flask.server:run"
 
 [tool.uv]
 dev-dependencies = [
     "ruff>=0.6.2",
-    "fastapi-cli>=0.0.5",
+    "docker==7.1.0",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["anki_flask"]

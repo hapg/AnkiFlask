@@ -47,9 +47,12 @@ def add_card_route():
     _logger.info(f"AnkiConnect response: {result}")
     return jsonify(result)
 
-@app.route('/test')
+@app.route('/anki_flask/test')
 def test():
     return 'Server is running', 200
 
+def run():
+    app.run(port=500)
+
 if __name__ == '__main__':
-    app.run(port=443)
+    run()
